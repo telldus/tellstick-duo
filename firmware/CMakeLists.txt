@@ -1,0 +1,31 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(TellStickDuo)
+
+SET(CMAKE_MODULE_PATH
+	"${CMAKE_SOURCE_DIR}/../cmake"
+	"${CMAKE_SOURCE_DIR}/../rf"
+)
+FIND_PACKAGE( PICC18 REQUIRED )
+FIND_PACKAGE( RF REQUIRED )
+
+
+SET(SOURCES
+	main.c
+	message.c
+	pwm.c
+	rf.c
+	usart.c
+)
+
+SET(HEADERS
+	config.h
+)
+
+LIST(APPEND CMAKE_EXE_LINKER_FLAGS "--ROM=default,-7A00-7FFF")
+
+ADD_HEX(TellStickDuo 18F4520
+	${SOURCES}
+	${HEADERS}
+	${RF_SOURCES}
+)
+

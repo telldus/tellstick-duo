@@ -1,6 +1,6 @@
 #include <htc.h>
 
-#define FIRMWARE_VERSION 5
+#define FIRMWARE_VERSION 12
 
 #define RECEIVER         RB4
 #define RECEIVER_TRIS    TRISB4

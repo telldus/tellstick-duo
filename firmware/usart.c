@@ -8,10 +8,11 @@
 #include "transmit.h"
 
 #define TRANSMIT_BUFFER 256
+#define RECEIVE_BUFFER 512
 
-static volatile unsigned char buffer[512];
+static volatile unsigned char buffer[RECEIVE_BUFFER];
 static volatile unsigned char tbuffer[TRANSMIT_BUFFER];
-static volatile unsigned char bufferP = 0;
+static volatile unsigned short bufferP = 0;
 volatile bit dataAvailable = 0;
 static char timeouts = 0;
 
@@ -129,6 +130,10 @@ void usartRCUpdate() {
 	} else {
 		buffer[bufferP] = rslt;
 		++bufferP;
+		if (bufferP >= RECEIVE_BUFFER) {
+			buffer[bufferP-1] = 0;
+			bufferP = 0;
+		}
 		//Start timeout timer
 		TMR1H = 0x0;
 		TMR1L = 0x0;
